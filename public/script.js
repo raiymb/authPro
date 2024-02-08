@@ -49,11 +49,6 @@ function displayWeatherbitData(data) {
 
 }
 
-
-function displayAQIData(data) {
-
-}
-
 function fetchWeatherbitData(city) {
   axios.get(`/weatherbit/${city}`)
     .then(response => {
@@ -189,3 +184,27 @@ document.getElementById('weatherForm').addEventListener('submit', function(event
       console.error("Error submitting weather search:", error);
     });
 });
+
+document.getElementById('weatherForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+  const city = document.getElementById('cityName').value;
+  fetchWeather(city); 
+  fetch14DayWeatherForecast(city);
+  fetchWikipediaInfo(city); 
+});
+
+function fetchWikipediaInfo(city) {
+  fetch(`/city/${city}`)
+  .then(response => response.json())
+  .then(data => {
+      if (data) {
+          document.getElementById('wikipediaTitle').textContent = data.title || 'City Information';
+          document.getElementById('wikipediaExtract').textContent = data.extract || 'No description available.';
+      }
+  })
+  .catch(error => {
+      console.error('Error fetching Wikipedia data:', error);
+      document.getElementById('wikipediaTitle').textContent = 'City Information';
+      document.getElementById('wikipediaExtract').textContent = 'Failed to fetch description.';
+  });
+}
