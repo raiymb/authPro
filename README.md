@@ -45,8 +45,13 @@ This is a full-featured application built with Node.js and Express, integrating 
 
 1. **Clone the repository:**
    git clone -b main https://github.com/raiymb/authPro.git
+
    npm install
+
    node server.js
+
    also this heroku link:https://derbes-weather-af918e129cf8.herokuapp.com/login
+
+   
 
 
