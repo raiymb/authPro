@@ -1,5 +1,6 @@
 const express = require('express');
 const SearchLog = require('../models/Search');
+const ApiLog = require('../models/ApiLog');
 const router = express.Router();
 
 router.get('/searchlogs', async (req, res) => {
@@ -38,5 +39,16 @@ router.get('/searchlogs', async (req, res) => {
     res.status(500).send('Error fetching search logs');
   }
 });
+
+router.get('/api-logs', async (req, res) => {
+  try {
+      const logs = await ApiLog.find({}).sort('-timestamp'); 
+      res.render('apiLog', { logs: logs });
+  } catch (error) {
+      console.error('Error fetching API logs:', error);
+      res.status(500).send('Error fetching API logs');
+  }
+});
+
 
 module.exports = router;

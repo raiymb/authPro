@@ -69,3 +69,136 @@ footer {
 .list-group-item {
     font-size: 16px;
 }
+
+#newsContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.news-article {
+    flex-basis: calc(33% - 20px);
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.news-article h3 {
+    font-size: 18px;
+    margin: 0;
+    padding: 15px;
+    background-color: #007BFF;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.news-article h3 a {
+    color: white;
+    text-decoration: none;
+}
+
+.news-article p {
+    padding: 0 15px 15px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.news-article img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .news-article {
+        flex-basis: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .news-article {
+        flex-basis: 100%;
+    }
+}
+
+.news-image-container img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#paginationContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#paginationContainer button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#paginationContainer button:hover {
+    background-color: #333;
+}
+#newsContainer {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: start; 
+    overflow-x: auto;
+    gap: 15px; 
+    padding: 10px 0; 
+}
+
+.news-article {
+    flex: 0 0 auto; 
+    width: 18%; 
+    min-width: 220px; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.news-image-container img {
+    width: 100%;
+    height: 120px; 
+    object-fit: cover;
+}
+
+.news-article h3, .news-article p {
+    padding: 6px;
+    margin: 0;
+    font-size: 0.9rem; 
+}
+
+.news-article h3 {
+    font-size: 1rem; 
+}
+
+#paginationContainer {
+    display: none; 
+}
+
+#paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    width: 100%;
+    overflow-x: auto; 
+}
+

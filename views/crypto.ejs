@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cryptocurrency Information</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../css/crypto.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Derbes Weather</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2"
+        aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Main <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/searchlogs">Weather History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/api-logs">API History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/nasa">NASA APOD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/crypt/crypto/">Crypto Info</a>
+            </li>
+            <% if (currentUser && (currentUser.username === 'raiymbek_batyr' || currentUser.isAdmin)) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+            <% } %>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+  <div class="container mt-5">
+    <form class="mb-4" action="/crypt/crypto" method="get">
+      <div class="input-group">
+        <input type="text" name="symbol" class="form-control" placeholder="Enter crypto symbol, e.g., BTC" required>
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h1 class="card-title mb-4">Cryptocurrency Information for <%= symbol %></h1>
+        <div id="cryptoInfo">
+          <p class="card-text">Price: <%= cryptoData.DISPLAY[symbol].USD.PRICE %></p>
+          <p class="card-text">24h Change: <%= cryptoData.DISPLAY[symbol].USD.CHANGE24HOUR %></p>
+          <p class="card-text">Market Cap: <%= cryptoData.DISPLAY[symbol].USD.MKTCAP %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>

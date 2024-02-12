@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+</head>
+<body>
+    <div id="en-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Derbes Weather</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2"
+                aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Main <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/searchlogs">Weather History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api-logs">API History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nasa">NASA APOD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crypt/crypto/">Crypto Info</a>
+                    </li>
+                    <% if (currentUser && (currentUser.username === 'raiymbek_batyr' || currentUser.isAdmin)) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Admin</a>
+                        </li>
+                    <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" onclick="switchLanguage('en')">English</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" onclick="switchLanguage('ru')">Русский</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    
+        <div class="container">
+            <h1 class="text-center mt-5">Admin Panel</h1>
+            <h2 class="text-center">Welcome, <%= currentUser.username %>!</h2>
+
+            <div class="form-container mt-5">
+                <h3>Add New User</h3>
+                <form action="/admin/add" method="POST">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
+                        </div>
+                        <div class="col">
+                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-5">
+                <h3>Users List</h3>
+                <ul class="list-group">
+                    <% users.forEach(function(user) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <%= user.username %> - <%= user.isAdmin ? "Admin" : "User" %>
+                            <div>
+                                <a href="/admin/edit/<%= user._id %>" class="btn btn-sm btn-info mr-2">Edit</a>
+                                <form action="/admin/delete/<%= user._id %>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="mt-5 bg-dark text-light text-center py-3">
+            <p>&copy; 2024 Batyr Raiymbek SE-2202. All rights reserved.</p>
+        </footer>
+    </div>
+    <div id="ru-content" style="display:none;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Погода в Дербесе</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2"
+                aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Главная <span class="sr-only">(текущая)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/searchlogs">История погоды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api-logs">История API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nasa">NASA APOD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crypt/crypto/">Информация о криптовалюте</a>
+                    </li>
+                    <% if (currentUser && (currentUser.username === 'raiymbek_batyr' || currentUser.isAdmin)) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Администрирование</a>
+                        </li>
+                    <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" onclick="switchLanguage('en')">English</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" onclick="switchLanguage('ru')">Русский</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+    
+        <div class="container">
+            <h1 class="text-center mt-5">Панель администратора</h1>
+            <h2 class="text-center">Добро пожаловать, <%= currentUser.username %>!</h2>
+    
+            <div class="form-container mt-5">
+                <h3>Добавить нового пользователя</h3>
+                <form action="/admin/add" method="POST">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="username" placeholder="Имя пользователя" required>
+                        </div>
+                        <div class="col">
+                            <input type="password" class="form-control" name="password" placeholder="Пароль" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Добавить пользователя</button>
+                    </div>
+                </form>
+            </div>
+    
+            <div class="mt-5">
+                <h3>Список пользователей</h3>
+                <ul class="list-group">
+                    <% users.forEach(function(user) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <%= user.username %> - <%= user.isAdmin ? "Администратор" : "Пользователь" %>
+                            <div>
+                                <a href="/admin/edit/<%= user._id %>" class="btn btn-sm btn-info mr-2">Редактировать</a>
+                                <form action="/admin/delete/<%= user._id %>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                                </form>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+    
+        <footer class="mt-5 bg-dark text-light text-center py-3">
+            <p>&copy; 2024 Батыр Райымбек SE-2202. Все права защищены.</p>
+        </footer>
+    </div>
+    <script>
+        function switchLanguage(language) {
+            if (language === 'en') {
+                document.getElementById('en-content').style.display = 'block';
+                document.getElementById('ru-content').style.display = 'none';
+                localStorage.setItem('language', 'en');
+            } else if (language === 'ru') {
+                document.getElementById('en-content').style.display = 'none';
+                document.getElementById('ru-content').style.display = 'block';
+                localStorage.setItem('language', 'ru');
+            }
+          }
+          
+          window.onload = function() {
+            var language = localStorage.getItem('language');
+            if (language === 'ru') {
+                switchLanguage('ru');
+            } else {
+                switchLanguage('en'); 
+            }
+          }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

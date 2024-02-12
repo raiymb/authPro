@@ -22,14 +22,29 @@
                     <a class="nav-link" href="/">Main <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/searchlogs">History</a>
+                    <a class="nav-link" href="/searchlogs">Weather History</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api-logs">API History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/nasa">NASA APOD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/crypt/crypto/">Crypto Info</a>
+                </li>
+                <% if (currentUser && (currentUser.username === 'raiymbek_batyr' || currentUser.isAdmin)) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                <% } %>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
+    
 
     <div class="container">
         <div class="form-container">
@@ -64,6 +79,8 @@
                         <h5 class="card-title" id="wikipediaTitle">City Information</h5>
                         <p class="card-text" id="wikipediaExtract">City description will appear here...</p>
                     </div>
+                    
+        <canvas id="weatherChart"></canvas>
                 </div>                
             </div>
         </div>
@@ -73,9 +90,14 @@
                 Map
             </div>
             <div id="map"></div>
+            <div id="newsContainer"></div>
+            <div id="paginationContainer"></div>
+
+
         </div>
     </div>
-
+    
+    
     <div class="card mb-3">
         <div class="card-header">
             Weatherbit Data
@@ -116,13 +138,12 @@
             <p>No weather data available.</p>
         <% } %>
     </div>
-
     <footer class="bg-light-gray text-white text-center p-3">
       <div class="footer-content">
           <p>&copy; 2024 WeatherApp full name: Batyr Raiymbek, SE-2202</p>
       </div>
   </footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -131,13 +152,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/script.js"></script>
-    <script>
-      document.getElementById('weatherForm').addEventListener('submit', function (event) {
-          event.preventDefault();
-          const city = document.getElementById('cityName').value;
-          fetchWeather(city); 
-          fetch14DayWeatherForecast(city); 
-      });
-    </script>
 </body>
 </html>

@@ -3,13 +3,15 @@ const axios = require('axios');
 const SearchLog = require('../models/Search');
 const router = express.Router();
 
+const ApiLog = require('../models/ApiLog');
+
 router.get('/', async (req, res) => {
     if (!req.session.user) {
       res.redirect('/login');
     } else {
       try {
-        const apiKey = 'eb487c460284448691cbd0930d6d45c8';
-        let city = 'Astana'; 
+        const apiKey = '9a55580ceafa470c8a420d5c6d52e3b6';
+        let city = 'Crakow'; 
   
         if (req.session.user.lastSearchedCity) {
           city = req.session.user.lastSearchedCity;
@@ -67,20 +69,29 @@ router.get('/', async (req, res) => {
   
     router.get('/weatherbit/:city', async (req, res) => {
       const city = req.params.city;
-      const weatherbitApiKey = "eb487c460284448691cbd0930d6d45c8";
+      const weatherbitApiKey = "9a55580ceafa470c8a420d5c6d52e3b6";
       try {
-        const response = await axios.get(`https://api.weatherbit.io/v2.0/current?city=${city}&key=${weatherbitApiKey}`);
-        console.log(response.data);
-        res.json(response.data);
+          const response = await axios.get(`https://api.weatherbit.io/v2.0/current?city=${city}&key=${weatherbitApiKey}`);
+          const weatherData = response.data;
+  
+          await new ApiLog({
+              username: req.session.user ? req.session.user.username : 'anonymous',
+              apiType: 'weatherbit',
+              requestDetails: { city },
+              responseDetails: weatherData,
+              timestamp: new Date()
+          }).save();
+  
+          res.json(weatherData);
       } catch (error) {
-        console.error("Error fetching Weatherbit data:", error);
-        res.status(500).json({ error: error.message });
+          console.error("Error fetching Weatherbit data:", error);
+          res.status(500).json({ error: error.message });
       }
-    });
+  });
   
     router.get('/weatherbit/forecast/:city', async (req, res) => {
       const city = req.params.city;
-      const weatherbitApiKey = "eb487c460284448691cbd0930d6d45c8";
+      const weatherbitApiKey = "9a55580ceafa470c8a420d5c6d52e3b6";
       try {
           const response = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${weatherbitApiKey}&days=16`);
           res.json(response.data);
@@ -98,7 +109,7 @@ router.get('/', async (req, res) => {
   
     try {
       const cityName = req.body.cityName;
-      const apiKey = 'eb487c460284448691cbd0930d6d45c8';
+      const apiKey = '9a55580ceafa470c8a420d5c6d52e3b6';
       const apiUrl = `https://api.weatherbit.io/v2.0/current?city=${cityName}&key=${apiKey}&units=metric`;
       
       const response = await axios.get(apiUrl);

@@ -1,0 +1,38 @@
+/* Custom CSS for NASA APOD page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+}
+
+h1 {
+    color: #333; /* Dark text color */
+}
+
+p {
+    color: #555; /* Slightly darker text color */
+}
+
+.container {
+    background-color: #fff; /* White background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    padding: 30px; /* Padding around the content */
+}
+
+.img-fluid {
+    border-radius: 10px; /* Rounded corners for the image */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+}
